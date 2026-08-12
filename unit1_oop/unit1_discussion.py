@@ -9,9 +9,7 @@ You are provided with starter code containing TODO sections. Your task is to com
 analyze the code to demonstrate understanding of inheritance, namespaces, and object copying.
 """
 
-
 from copy import copy, deepcopy
-
 
 # TODO 1:
 # Create a parent class.
@@ -24,8 +22,14 @@ from copy import copy, deepcopy
 #
 # Replace the pass statement with your implementation.
 
-class ParentClass:
-    pass
+class Character:
+    max_level = 100
+    def __init__(self, name, health):
+        self.name = name
+        self.health = health
+
+    def status(self):
+        return f"{self.name}: {self.health} HP (max level: {self.max_level})"
 
 
 # TODO 2:
@@ -40,8 +44,24 @@ class ParentClass:
 #
 # Replace the pass statement with your implementation.
 
-class ChildClass(ParentClass):
-    pass
+class Mage(Character):
+    max_level = 60
+    def __init__(self, name, health, mana):
+        super().__init__(name, health)
+        self.mana = mana
+
+    def cast_spell(self):
+        return f"{self.name} casts a spell, 10 mana ({self.mana} remaining)"
+
+    def status(self):
+        parent_status = super().status()
+        return f"{parent_status}, {self.mana} MP (Mage)"
+
+    # my new method, self-contained behavior to an existing class
+    # and gives the mage a way to recover mana
+    def rest(self, amount=20):
+        self.mana += amount
+        return f"{self.name} rests and recovers {amount} mana ({self.mana} toal)"
 
 
 # TODO 3:
@@ -57,7 +77,18 @@ class ChildClass(ParentClass):
 
 def demonstrate_namespaces():
     print("\n=== Namespace Demonstration ===")
-    print("TODO: Implement namespace demonstration")
+
+    mage1 = Mage("Bob", 80, 50)
+    mage2 = Mage("Steve", 75, 45)
+    print (f"Mage.max_level (via class) = {Mage.max_level}")
+    print (f"mage1.max_level (via object) = {mage1.max_level}")
+
+    mage1.guild = "Bob's Burgers"
+    print(f"\nmage1.__dict__ = {mage1.__dict__} <- has 'guild'")
+    print(f"mage2.__dict__ = {mage2.__dict__} <- doesn't")
+    print(f"\n'max_level' isn't in either __dict__ above; it's shared")
+    print(f"from the class namespace: Mage.__dict__['max_level'] = "
+          f"{Mage.__dict__['max_level']}")
 
 
 # TODO 4:
@@ -73,8 +104,25 @@ def demonstrate_namespaces():
 
 def demonstrate_copying():
     print("\n=== Copy Demonstration ===")
-    print("TODO: Implement shallow copy and deep copy demonstration")
 
+    original = Mage("Bob", 80, 50)
+    original.inventory = ["Burger", "Fire Scroll"]  #nested mutable data
+
+    shallow = copy(original) #new object, inventory list is shared
+    deep = deepcopy(original) #another new object, fully separate inventory list
+    original.inventory.append("Mana Crystal") ##mutates the shared list
+    original.name = "Bob the Burger Maker" ##reassings a string (not shared)
+
+    print(f"original: name={original.name}, inventory={original.inventory}")
+    print(f"shallow: name={shallow.name}, inventory={shallow.inventory}")
+    print(f"deep: name={deep.name}, inventory={deep.inventory}")
+
+#########################################################
+# shallow.inventory shows "Mana Crystal" (shared list); #
+# deep.inventory doesn't (separate/independent list).   #
+# shallow.name nor deep.name did not change, as they're #
+# immutable strings.                                    #
+#########################################################
 
 # TODO 5:
 # Complete the main function.
@@ -89,9 +137,15 @@ def demonstrate_copying():
 def main():
     print("=== Unit 1 OOP Assignment ===")
 
-    print("\nTODO: Create and test your parent object")
+    npc = Character("Villager Reinhardt", 30)
+    print("\nParent object:")
+    print(npc.status())
 
-    print("\nTODO: Create and test your child object")
+    hero = Mage("Bob", 80, 50)
+    print("\nChild object:")
+    print(hero.status())
+    print(hero.cast_spell())
+    print(hero.rest()) # the rest in action to recover mana
 
     demonstrate_namespaces()
     demonstrate_copying()
