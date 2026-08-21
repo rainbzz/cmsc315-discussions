@@ -32,5 +32,16 @@ After completing the programming assignment, add this reflection to your initial
 Your reflection should be approximately 150–200 words and address the following questions:
 
 1. What concepts or skills did you learn while completing this assignment?
+This assignment helped me understand how Stack (LIFO) and Queue (FIFO) structures work under the hood, rather than just knowing their definitions.
+Implementing push/pop/peek and enqueue/dequeue/front from scratch made the difference between "last in, first out" and "first in, first out" concrete—especially seeing 
+how a stack's pop() and a queue's dequeue() remove from opposite ends relative to insertion, even though peek() and front() serve the same conceptual purpose (previewing the next item without removing it).
+
 2. What challenges did you encounter, and how did you overcome them?
+My biggest challenge was a runtime AttributeError on self.items. After tracing the traceback, I found a duplicate, incorrectly nested def __init__ inside Stack.__init__,
+which silently prevented self.items from ever being created. Debugging it taught me to read indentation carefully and trust tracebacks to point to the real failure point.
+
 3. Explain the differences between stacks and queues as this relates to real-world applications.
+In real-world terms, stacks fit "undo" actions in software, where the most recent change should be reversed first, while queues model fairness-based ordering,
+like a printer processing jobs in the order they were submitted or people waiting in a checkout line.
+
+
