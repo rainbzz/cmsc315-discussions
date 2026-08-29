@@ -26,8 +26,8 @@ After completing the programming assignment, add this reflection to your initial
 Your reflection should be approximately 150–200 words and address the following questions:
 
 1. What concepts or skills did you learn while completing this assignment?
-Completing this assignment deepened my understanding of how Python lists work under the hood. I learned that insert() and pop() don't just
-add or remove values instantly; they physically shift every subsequent element in memory. This felt familiar coming from JavaScript,
+This assignment helped shift my understanding of how Python lists work. I recognized that insert() and pop() don't just
+add or remove values instantly; they physically shift every subsequent element in memory. This was familiar coming from JavaScript,
 where array methods like splice() and unshift() behave the same way under the hood. I also practiced using conditional expressions
 and boolean short-circuiting (like x or y) to write more concise functions while still validating inputs safely.
 
